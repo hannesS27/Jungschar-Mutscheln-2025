@@ -13,7 +13,10 @@
     <form id="scoreForm" class="form">
       <input type="text" id="name" placeholder="Name eingeben" required>
       <input type="number" id="score" placeholder="Punkte eingeben" required>
-      <button type="submit">Hinzufügen</button>
+      <div class="button-container">
+        <button type="submit" class="submit-button">Hinzufügen</button>
+        <button type="button" id="extraButton" class="extra-button">+5 Punkte für Mitarbeiter</button>
+      </div>
     </form>
 
     <table class="leaderboard">
@@ -31,10 +34,14 @@
 
     <div id="readMode" class="read-mode">
       <div class="read-content">
+        <button class="arrow left" id="prevButton">←</button>
         <p id="readContent"></p>
-        <button class="next-button" id="nextButton">Weiter</button>
+        <button class="arrow right" id="nextButton">→</button>
       </div>
     </div>
+
+    <canvas id="confettiCanvas"></canvas>
+
   </div>
 
   <script src="script.js"></script>

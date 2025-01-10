@@ -1,1 +1,51 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jungschar Mutscheln 2025</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">Jungschar Mutscheln 2025</h1>
+
+    <form id="scoreForm" class="form">
+      <input type="text" id="name" placeholder="Name eingeben" required>
+      <input type="number" id="score" placeholder="Punkte eingeben" required>
+      <label>
+        <input type="checkbox" id="isMitarbeiter"> Mitarbeiter (+5 Punkte)
+      </label>
+      <div class="button-container">
+        <button type="submit" class="submit-button">Hinzufügen</button>
+      </div>
+    </form>
+
+    <table class="leaderboard">
+      <thead>
+        <tr>
+          <th>Platz</th>
+          <th>Name</th>
+          <th>Punkte</th>
+        </tr>
+      </thead>
+      <tbody id="leaderboard"></tbody>
+    </table>
+
+    <button id="readModeButton" class="read-button">Punkte vorlesen</button>
+
+    <div id="readMode" class="read-mode hidden">
+      <div class="navigation">
+        <button id="prevButton" class="arrow">←</button>
+        <button id="nextButton" class="arrow">→</button>
+      </div>
+      <div id="readContent" class="read-content"></div>
+    </div>
+
+    <canvas id="confettiCanvas" class="hidden"></canvas>
+
+    <script src="script.js"></script>
+  </div>
+</body>
+</html>
 

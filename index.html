@@ -4,48 +4,146 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jungschar Mutscheln 2025</title>
-  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+      max-width: 300px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    table, th, td {
+      border: 1px solid black;
+    }
+    th, td {
+      text-align: center;
+      padding: 8px;
+    }
+    .hidden {
+      display: none;
+    }
+    .navigation {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1 class="title">Jungschar Mutscheln 2025</h1>
+  <h1>Jungschar Mutscheln 2025</h1>
 
-    <form id="scoreForm" class="form">
+  <form id="scoreForm">
+    <label>
+      Name:
       <input type="text" id="name" placeholder="Name eingeben" required>
+    </label>
+    <label>
+      Punkte:
       <input type="number" id="score" placeholder="Punkte eingeben" required>
-      <label>
-        <input type="checkbox" id="isMitarbeiter"> Mitarbeiter (+5 Punkte)
-      </label>
-      <div class="button-container">
-        <button type="submit" class="submit-button">Hinzufügen</button>
-      </div>
-    </form>
+    </label>
+    <button type="submit">Hinzufügen</button>
+  </form>
 
-    <table class="leaderboard">
-      <thead>
-        <tr>
-          <th>Platz</th>
-          <th>Name</th>
-          <th>Punkte</th>
-        </tr>
-      </thead>
-      <tbody id="leaderboard"></tbody>
-    </table>
+  <table>
+    <thead>
+      <tr>
+        <th>Platz</th>
+        <th>Name</th>
+        <th>Punkte</th>
+      </tr>
+    </thead>
+    <tbody id="leaderboard"></tbody>
+  </table>
 
-    <button id="readModeButton" class="read-button">Punkte vorlesen</button>
+  <button id="startPresentation">Präsentationsmodus starten</button>
 
-    <div id="readMode" class="read-mode hidden">
-      <div class="navigation">
-        <button id="prevButton" class="arrow">←</button>
-        <button id="nextButton" class="arrow">→</button>
-      </div>
-      <div id="readContent" class="read-content"></div>
+  <div id="presentation" class="hidden">
+    <h2 id="presentationTitle"></h2>
+    <div class="navigation">
+      <button id="prevButton">← Zurück</button>
+      <button id="nextButton">Weiter →</button>
     </div>
-
-    <canvas id="confettiCanvas" class="hidden"></canvas>
-
-    <script src="script.js"></script>
   </div>
+
+  <script>
+    const form = document.getElementById("scoreForm");
+    const leaderboard = document.getElementById("leaderboard");
+    const startPresentationButton = document.getElementById("startPresentation");
+    const presentation = document.getElementById("presentation");
+    const presentationTitle = document.getElementById("presentationTitle");
+    const prevButton = document.getElementById("prevButton");
+    const nextButton = document.getElementById("nextButton");
+
+    let scores = [];
+    let currentIndex = 0;
+
+    // Beim Hinzufügen eines Namens und einer Punktzahl
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      const score = parseInt(document.getElementById("score").value);
+      scores.push({ name, score });
+      scores.sort((a, b) => b.score - a.score); // Sortierung nach Punkten (höchste Punkte zuerst)
+      renderLeaderboard();
+      form.reset();
+      document.getElementById("name").focus(); // Cursor in das Namensfeld zurücksetzen
+    });
+
+    // Rangliste rendern
+    const renderLeaderboard = () => {
+      leaderboard.innerHTML = "";
+      scores.forEach((entry, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${scores.length - index}</td>
+          <td>${entry.name}</td>
+          <td>${entry.score}</td>
+        `;
+        leaderboard.appendChild(row);
+      });
+    };
+
+    // Präsentationsmodus starten
+    startPresentationButton.addEventListener("click", () => {
+      if (scores.length === 0) return alert("Es gibt keine Einträge!");
+      currentIndex = 0;
+      updatePresentation();
+      presentation.classList.remove("hidden");
+    });
+
+    // Präsentationsmodus aktualisieren
+    const updatePresentation = () => {
+      if (currentIndex < scores.length) {
+        const { name, score } = scores[currentIndex];
+        const platz = scores.length - currentIndex; // Platzierungsberechnung
+        presentationTitle.textContent = `Platz ${platz}: ${name} mit ${score} Punkten`;
+      } else {
+        presentationTitle.textContent = "Ende der Rangliste!";
+      }
+    };
+
+    // Navigation im Präsentationsmodus
+    prevButton.addEventListener("click", () => {
+      if (currentIndex > 0) currentIndex--;
+      updatePresentation();
+    });
+
+    nextButton.addEventListener("click", () => {
+      if (currentIndex < scores.length - 1) currentIndex++;
+      updatePresentation();
+    });
+  </script>
 </body>
 </html>
-

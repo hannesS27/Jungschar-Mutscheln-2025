@@ -4,128 +4,39 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jungschar Mutscheln 2025</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f9f9f9;
-      color: #333;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-    h1 {
-      margin-top: 20px;
-      color: #4CAF50;
-    }
-    form {
-      margin: 20px 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-    }
-    input, button {
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    input:focus, button:focus {
-      outline: none;
-      border-color: #4CAF50;
-    }
-    button {
-      background-color: #4CAF50;
-      color: white;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #45a049;
-    }
-    table {
-      width: 80%;
-      margin-top: 20px;
-      border-collapse: collapse;
-    }
-    th, td {
-      text-align: center;
-      padding: 10px;
-      border: 1px solid #ddd;
-    }
-    th {
-      background-color: #4CAF50;
-      color: white;
-    }
-    #reset {
-      display: none; /* Versteckter Reset-Button */
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Jungschar Mutscheln 2025</h1>
-  <form id="scoreForm">
-    <input type="text" id="name" placeholder="Name" required>
-    <input type="number" id="score" placeholder="Punkte" required>
-    <button type="submit">Hinzufügen</button>
-  </form>
-  <table>
-    <thead>
-      <tr>
-        <th>Platz</th>
-        <th>Name</th>
-        <th>Punkte</th>
-      </tr>
-    </thead>
-    <tbody id="leaderboard"></tbody>
-  </table>
-  <button id="reset">Zurücksetzen</button>
+  <div class="container">
+    <h1 class="title">Jungschar Mutscheln 2025</h1>
 
-  <script>
-    const form = document.getElementById("scoreForm");
-    const leaderboard = document.getElementById("leaderboard");
-    const resetButton = document.getElementById("reset");
+    <form id="scoreForm" class="form">
+      <input type="text" id="name" placeholder="Name eingeben" required>
+      <input type="number" id="score" placeholder="Punkte eingeben" required>
+      <button type="submit">Hinzufügen</button>
+    </form>
 
-    let scores = [];
+    <table class="leaderboard">
+      <thead>
+        <tr>
+          <th>Platz</th>
+          <th>Name</th>
+          <th>Punkte</th>
+        </tr>
+      </thead>
+      <tbody id="leaderboard"></tbody>
+    </table>
 
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
+    <button id="readModeButton" class="read-button">Punkte vorlesen</button>
 
-      const name = document.getElementById("name").value.trim();
-      const score = parseInt(document.getElementById("score").value, 10);
+    <div id="readMode" class="read-mode">
+      <div class="read-content">
+        <p id="readContent"></p>
+        <button class="next-button" id="nextButton">Weiter</button>
+      </div>
+    </div>
+  </div>
 
-      if (name && !isNaN(score)) {
-        scores.push({ name, score });
-        updateLeaderboard();
-        form.reset();
-      }
-    });
-
-    resetButton.addEventListener("click", () => {
-      scores = [];
-      updateLeaderboard();
-    });
-
-    function updateLeaderboard() {
-      leaderboard.innerHTML = "";
-
-      scores
-        .sort((a, b) => a.score - b.score) // Sortiere nach niedrigsten Punkten
-        .forEach((entry, index) => {
-          const row = document.createElement("tr");
-          row.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${entry.name}</td>
-            <td>${entry.score}</td>
-          `;
-          leaderboard.appendChild(row);
-        });
-
-      // Zeige den Reset-Button, wenn Einträge existieren
-      resetButton.style.display = scores.length > 0 ? "block" : "none";
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>

@@ -15,7 +15,7 @@
       <input type="number" id="score" placeholder="Punkte eingeben" required>
       <div class="button-container">
         <button type="submit" class="submit-button">Hinzufügen</button>
-        <button type="button" id="extraButton" class="extra-button">+5 Punkte für Mitarbeiter</button>
+        <button type="button" id="extraButton" class="extra-button">+5 für Mitarbeiter</button>
       </div>
     </form>
 
@@ -33,17 +33,13 @@
     <button id="readModeButton" class="read-button">Punkte vorlesen</button>
 
     <div id="readMode" class="read-mode">
-      <div class="read-content">
-        <button class="arrow left" id="prevButton">←</button>
-        <p id="readContent"></p>
-        <button class="arrow right" id="nextButton">→</button>
-      </div>
+      <button class="arrow left" id="prevButton">←</button>
+      <div id="readContent" class="read-content"></div>
+      <button class="arrow right" id="nextButton">→</button>
     </div>
-
-    <canvas id="confettiCanvas"></canvas>
-
   </div>
 
   <script src="script.js"></script>
 </body>
 </html>
+
